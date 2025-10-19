@@ -3,6 +3,44 @@ Static Website Example
 
 To be used with Cloud Academy labs.
 
+## Quick Start
+
+This guide explains how to run the application using Docker, but without Docker Compose.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/)
+
+### 1. Build the Backend Image
+
+```bash
+docker build -t python-backend .
+```
+
+### 2. Create a Docker Network
+
+```bash
+docker network create app-network
+```
+
+### 3. Run the Backend Container
+
+```bash
+docker run -d --name backend --network app-network python-backend
+```
+
+### 4. Run the Nginx Container
+
+```bash
+docker run -d --name nginx -p 8181:80 --network app-network \
+  -v $(pwd)/nginx.conf:/etc/nginx/conf.d/default.conf \
+  -v $(pwd):/usr/share/nginx/html \
+  nginx:latest
+```
+
+### 5. Access the Application
+
+Open your web browser and navigate to `http://localhost:8181`.
 
 License
 ----------------------
